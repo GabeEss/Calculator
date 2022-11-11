@@ -1,0 +1,109 @@
+body{
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    margin: 5vh;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(white 0%, rgb(92, 92, 88) 0%, white 0%, rgb(101, 101, 96) 100%);
+}
+
+.calculator{
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    opacity: .75;
+    max-width: fit-content;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.display{
+    display: flex;
+    justify-content:center;
+    padding-bottom: 20px;
+}
+
+#disp-box{
+    text-align: right;
+    display: flex;
+    background-color:white;
+    border-radius: 15px;
+    outline-style: none;
+    border-style: none;
+    color: black;
+    font-size:34px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button{
+    color: black;
+    border-radius: 50px;
+    border-style: none;
+    background-color: white;
+    font-size: 24px;
+    padding: 24px;
+}
+
+.buttonLayout{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.op-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 18px;
+    padding-right: 18px;
+    gap: 10px;
+}
+
+/* Alter the operator buttons.*/
+.operator{
+    background-color: rgb(101, 101, 96);
+    color:goldenrod;
+    font-weight: 500;
+}
+
+.operator:focus{
+    background-color: goldenrod;
+    color: rgb(101, 101, 96);
+}
+
+.back-clear-neg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Alter the back-clear-neg buttons. */
+.bcn{
+    background-color:  rgb(101, 101, 96);
+    color:goldenrod;
+}
+
+.bcn:active{
+    background-color: goldenrod;
+    color:rgb(101, 101, 96)
+}
+
+.num-buttons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.num:active{
+    background-color: black;
+    color: white;
+}
+
+#equals:active{
+    background-color: black;
+    color: white;
+}

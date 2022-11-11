@@ -8,6 +8,8 @@ beginScript();
 
 function beginScript()
 {
+    dis.value = "0";
+
     let numberButtons = document.querySelectorAll(".num"); // get node list of numbers
     numberButtons.forEach(display); // add event listeners for each number
 
@@ -54,7 +56,12 @@ function display(item)
             else
                 dis.value += item.textContent;
         else
-            dis.value += item.textContent; // add numbers to the display value
+        {
+            if(dis.value == 0)
+                dis.value = item.textContent; // replace 0
+            else
+                dis.value += item.textContent; // add numbers to the display value
+        }
     }
     })
 }
@@ -75,6 +82,7 @@ function store(item)
         // Checks to make sure we're not storing NaN due to multiple operator inputs.
         else if(!isNaN(parseFloat(dis.value))) 
         {
+            console.log("is NaN");
             if(dis.value.includes("."))
                 storedNum1 = parseFloat(dis.value); // if there is a decimal, store a float
             else
@@ -89,14 +97,14 @@ function store(item)
             if(storedRes != null)
             {
                 storedNum1 = storedRes; // the result is the new storedNum1
-                storedRes = null; // the result value is reset
+                storedRes = null;
             }
 
             storedOp = item.textContent; // stores the operator
         }
     });
     item.addEventListener('click', function(){
-        // This event is going to light up the operator, so you know which one is selected.
+
     })
 }
 
@@ -122,19 +130,23 @@ function equals()
 // Takes the current number in the display and makes it either positive or negative
 function makeNegPos()
 {
-    number = parseInt(dis.value);
+    if(dis.value.includes("."))
+        number = parseFloat(dis.value);
+    else number = parseInt(dis.value);
 
     if(number > 0)
        dis.value = "-" + dis.value;
     else
     {
-        dis.value = dis.value.substring(1, dis.value.length);
+        if(dis.value != 0)
+            dis.value = dis.value.substring(1, dis.value.length);
+        else;
     } 
 }
 
 function clear()
 {
-    dis.value = "";
+    dis.value = "0";
     storedOp = null;
     storedNum1 = null;
     storedNum2 = null;
@@ -142,14 +154,18 @@ function clear()
 }
 
 function backspace()
-{
-    if(storedRes == null)
-        dis.value = dis.value.substring(0, dis.value.length - 1);
-    if(storedNum2 == null) // if the second half of the expression has not started
-    {
-        storedOp = null; // reset these values to be reinitialized by the store function
-        storedNum1 = null;
+{   
+        if(dis.value != 0) {    
+        if(storedRes == null)
+            dis.value = dis.value.substring(0, dis.value.length - 1);
+
+        if(storedNum2 == null) // if the second half of the expression has not started
+        {
+            storedOp = null; // reset these values to be reinitialized by the store function
+            storedNum1 = null;
+        }
     }
+    else;
 }
 
 function operate(operator, num1, num2)
