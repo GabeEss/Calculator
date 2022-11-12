@@ -26,7 +26,7 @@ Things to know:
 
 '.' : decimal
 
-Decimals round to six places once the number of decimal places is over 6.
+Decimals round to six places once the number of decimal places is over 6. This won't occur for really big numbers.
 
 Note: If you want to change a result, click on an operator first and then you can change it to neg/pos or delete digits.
 
