@@ -18,22 +18,59 @@ function beginScript()
 
     let negPos = document.querySelector('#neg-pos'); 
     negPos.addEventListener('click', () => makeNegPos()) // make number negative or positive
+    window.addEventListener('keydown', (event) => {
+        if(event.code == "KeyN") negPos.click();
+    }, false);
 
     let clearButton = document.querySelector("#clear");
     clearButton.addEventListener('click', () => clear());
+    window.addEventListener('keydown', (event) => {
+        if(event.code == "KeyC") clearButton.click();
+    }, false);
 
     let equalsButton = document.querySelector("#equals"); 
     equalsButton.addEventListener('click', () => equals());
+    window.addEventListener('keydown', (event) => {
+        if(event.shiftKey); // so that you can use the plus key
+        else
+            if(event.code == "Equal") equalsButton.click();
+    }, false);
 
     let backspaceButton = document.querySelector("#backspace"); // delete button
     backspaceButton.addEventListener('click', () => backspace());
+    window.addEventListener('keydown', (event) => {
+        if(event.code == "Backspace") backspaceButton.click();
+    }, false);
 
 }
 
+// This function executes when a number button is clicked or a number key is pressed
+// down.
 function display(item)
 {
-    item.addEventListener('click', function() {
+    // Listen for a number button on click.
+    item.addEventListener('click', () => setDisplay(item))
 
+    // Listen for the number button when a key is pressed.
+    window.addEventListener('keydown', (event) => {
+
+        if(event.code === 'Digit8' && event.shiftKey); // so that we can multiply
+        else {
+            // Checks to see if the number key corresponds to the correct item.
+            if(event.code === `Digit${item.textContent}`)
+            {
+                setDisplay(item);
+            }
+            else if(event.code === 'Period' && item.textContent == '.')
+            {
+                setDisplay(item);
+            };
+    }
+    }, false);
+}
+
+function setDisplay(item)
+{
     // If the first stored number is full and the second is empty.
     // This will occur during the second half of an expression.
     if(storedNum1 != null && storedOp != null && storedNum2 == null)
@@ -63,49 +100,72 @@ function display(item)
                 dis.value += item.textContent; // add numbers to the display value
         }
     }
-    })
+    
 }
 
+// This function executes when an operator button is clicked or the key is pressed.
 function store(item)
 {
-    item.addEventListener('click', function(){ 
-        // This block calculates the result of storedNum1 and storedNum2
-        if(storedNum2 != null) 
+    // Listen for an operator button on click.
+    item.addEventListener('click', () => setOperatorSetResult(item));
+
+    // Listen for the operator button when a key is pressed.
+    window.addEventListener('keydown', (event) => {
+        if(event.code === `Minus` && item.textContent === `-`)
         {
-            storedNum2 = dis.value; // update storedNum2
-            storedRes = operate(storedOp, storedNum1, storedNum2); // calculate
-            dis.value = storedRes; // display
-            storedNum1 = null; // reset storedNum1
-            storedNum2 = null; // reset storedNum2
+            setOperatorSetResult(item);
         }
-        // This block stores the first number if the second has not been initialized.
-        // Checks to make sure we're not storing NaN due to multiple operator inputs.
-        else if(!isNaN(parseFloat(dis.value))) 
+        else if(event.code === 'Slash' && item.textContent === '/')
         {
-            console.log("is NaN");
-            if(dis.value.includes("."))
-                storedNum1 = parseFloat(dis.value); // if there is a decimal, store a float
-            else
-                storedNum1 = parseInt(dis.value);
+            setOperatorSetResult(item);
+        }
+        // used event.key instead of event.code because event.code returned "Equal"
+        else if(event.shiftKey && event.code == 'Equal' && item.textContent === `+`)
+        {
+            setOperatorSetResult(item);
+        }
+        else if(event.shiftKey && event.code == 'Digit8' && item.textContent === `*`)
+        {
+            setOperatorSetResult(item);
+        }
+        else;
+    }, false);
+}
+
+function setOperatorSetResult(item)
+{
+    // This block calculates the result of storedNum1 and storedNum2
+    if(storedNum2 != null) 
+    {
+        storedNum2 = dis.value; // update storedNum2
+        storedRes = operate(storedOp, storedNum1, storedNum2); // calculate
+        dis.value = storedRes; // display
+        storedNum1 = null; // reset storedNum1
+        storedNum2 = null; // reset storedNum2
+    }
+    // This block stores the first number if the second has not been initialized.
+    // Checks to make sure we're not storing NaN due to multiple operator inputs.
+    else if(!isNaN(parseFloat(dis.value))) 
+    {
+        if(dis.value.includes("."))
+            storedNum1 = parseFloat(dis.value); // if there is a decimal, store a float
+        else
+            storedNum1 = parseInt(dis.value);
+    }
+
+    // This block stores the operator.
+    if(storedNum1 != null || storedRes != null)
+    {
+        // This will occur if you have a result in the display and an operator button
+        // is pressed.
+        if(storedRes != null)
+        {
+            storedNum1 = storedRes; // the result is the new storedNum1
+            storedRes = null;
         }
 
-        // This block stores the operator.
-        if(storedNum1 != null || storedRes != null)
-        {
-            // This will occur if you have a result in the display and an operator button
-            // is pressed.
-            if(storedRes != null)
-            {
-                storedNum1 = storedRes; // the result is the new storedNum1
-                storedRes = null;
-            }
-
-            storedOp = item.textContent; // stores the operator
-        }
-    });
-    item.addEventListener('click', function(){
-
-    })
+        storedOp = item.textContent; // stores the operator
+    }
 }
 
 function equals()
@@ -120,9 +180,7 @@ function equals()
         storedOp = null; // reset stored operator
     }
     else if(storedNum1 != null)
-    {
-        storedOp = null; // reset operator
-    }
+        storedOp = null;
     // do nothing if the first stored number hasn't been initialized
     else;
 }
