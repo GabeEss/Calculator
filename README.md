@@ -30,8 +30,6 @@ Decimals round to six places once the number of decimal places is over 6. This w
 
 Note: If you want to change a result, click on an operator first and then you can change it to neg/pos or delete digits.
 
-Known bugs: 
-
-Enter/Return seems to repeat the last button/key press.
+Known bugs:
 
 The css active button transformations won't work when using keyboard.
