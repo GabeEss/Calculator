@@ -8,29 +8,30 @@ Things to know:
 
 
 
-n or +/-: switches the number to negative
+'n': switches the current number in the display to negative, but not a result.
 
-= : gets the answer
+'=' : gets the answer
 
-delete/backspace: deletes the last digit/decimal, but it won't delete a result (this is by design).
+'delete'/'backspace' : deletes the last digit/decimal, but it won't delete a result (this is by design).
 
-c: clears the display and the stored values
+'c' : clears the display and the stored values
 
-/: division
+'/' : division
 
-+: addition
+'+' : addition
 
-*: multiplication
+'*' : multiplication
 
--: subtraction
+'-' : subtraction
 
-.: decimal
+'.' : decimal
 
 Decimals round to six places once the number of decimal places is over 6.
 
+Note: If you want to change a result, click on an operator first and then you can change it to neg/pos or delete digits.
 
+Known bugs: 
 
+Enter/Return seems to repeat the last button/key press.
 
-
-
-Known bugs: Enter/Return creates nine for some reason. The css active button transformations won't work when using keyboard.
+The css active button transformations won't work when using keyboard.
