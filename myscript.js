@@ -192,12 +192,27 @@ function makeNegPos()
         number = parseFloat(dis.value);
     else number = parseInt(dis.value);
 
-    if(number > 0)
-       dis.value = "-" + dis.value;
-    else
+    if(number > 0) // if positive
+    {
+        dis.value = "-" + dis.value;
+        
+        if(dis.value.includes("."))
+            storedRes = parseFloat(dis.value); // store the new result
+        else
+            storedRes = parseInt(dis.value);
+    }
+    else // if negative
     {
         if(dis.value != 0)
+        {
             dis.value = dis.value.substring(1, dis.value.length);
+            storedRes = dis.value;
+
+            if(dis.value.includes("."))
+                storedRes = parseFloat(dis.value);
+            else
+                storedRes = parseInt(dis.value);
+        }
         else;
     } 
 }
